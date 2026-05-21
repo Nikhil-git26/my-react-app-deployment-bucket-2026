@@ -1,11 +1,17 @@
 version: 0.2
 
 phases:
+  pre_build:
+    commands:
+      - echo "Starting AI-driven security scanning with Amazon Inspector..."
+      - # Download from a globally accessible, stable fallback mirror
+      - wget https://amazon-inspector-sbom-gen-us-east-1.s3.amazonaws.com/latest/linux/amd64/inspector-sbom-gen
+      - chmod +x inspector-sbom-gen
+      - ./inspector-sbom-gen directory --path . --output sbom.json
+      - echo "Scan complete. SBOM generated successfully for analysis."
   build:
     commands:
-      - echo "Preparing static assets..."
-      - echo "No compilation needed for simple HTML website."
-
+      - echo "Preparing static assets for delivery..."
 artifacts:
   files:
     - index.html
